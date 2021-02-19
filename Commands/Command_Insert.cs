@@ -15,25 +15,13 @@ namespace BrusAutomat.Commands
             HelpText = "'Amount'";
         }
 
-        private string OperationSuccess(int value) => $"Added a coin with value {value}";
-        private string OperationFailure(int value) => $"Invalid coin type {value}";
-
         public override string TryExecute(params string[] parameters)
         {
-            if (ValidateParameterLength(parameters.Length) && OperationTarget != null)
-            {
-                // Try parse coin value
-                int.TryParse(parameters[1], out int coinValue);
+            if (!ValidateParameterLength(parameters.Length) || OperationTarget == null) return MsgError;
 
-                if (coinValue > 0) 
-                {
-                    bool wasExecuted = OperationTarget.InsertCoin(coinValue);
-                    if (wasExecuted) return OperationSuccess(coinValue);
-                    else return OperationFailure(coinValue);
-                }
-            }
-            
-            return MsgError;
+            int value = int.Parse(parameters[1]);
+            if (value > 0) return OperationTarget.InsertCoin(value);
+            else return "SOMETHING ELSE IN INSERT";
         }
     }
 }

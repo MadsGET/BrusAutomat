@@ -14,25 +14,14 @@ namespace BrusAutomat.Commands
             HelpText = "'Code'";
         }
 
-        private string OperationSuccess(string productName) => $"You purchased {productName.Trim()}.";
-        private string OperationFailure => $"Not enough coins or item does not exist.";
-
         public override string TryExecute(params string[] parameters)
         {
             string codeInput = parameters[1];
-
-            if (ValidateParameterLength(parameters.Length) && OperationTarget != null)
+            if (ValidateParameterLength(parameters.Length) && OperationTarget != null) 
             {
-                if (OperationTarget.Purchase(codeInput)) 
-                {
-                    Product fetchedProduct = OperationTarget.Products.GetItem(codeInput);
-                    Console.WriteLine(fetchedProduct);
-                    return OperationSuccess(fetchedProduct.Name);
-                } 
-                else return OperationFailure;
+                return OperationTarget.Purchase(codeInput);
             }
-
-            return MsgError;
+            else return MsgError;
         }
     }
 }

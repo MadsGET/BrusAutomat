@@ -19,7 +19,7 @@ namespace BrusAutomat
 
         public override string ToString()
         {
-            return $"{Name} Price: {Price}.00 NOK Code: {Code}";
+            return $"{Name.Trim()} Price: {Price}.00 NOK Code: {Code}";
         }
     }
 }

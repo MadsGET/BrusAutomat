@@ -31,7 +31,7 @@ namespace BrusAutomat
         }
 
         public int TotalValue() => Value * Amount;
-        public override string ToString() => (Amount == 0) ? $"{Value}" : $"{Value}x{Amount}";
+        public override string ToString() => $"{Value}x{Amount}";
 
         public bool CompareTo(Coin other)
         {

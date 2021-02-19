@@ -19,48 +19,55 @@ namespace BrusAutomat
             AcceptedCoinValues = acceptedCoinValues;
         }
 
-        public bool InsertCoin(int value) 
+        public string InsertCoin(int value) 
         {
             Coin fetchedCoin = Coins.GetCoin(value);
 
-            if (fetchedCoin != null)
-            {
-                fetchedCoin.Amount++;
-                return true;
-            }
+            if (fetchedCoin == null) return $"This machine does not accept {value} coin";
             else 
             {
-                return false;
+                fetchedCoin.Amount++;
+                return $"You have inserted a coin with value {value}.";
             }
         }
 
-        public bool ReturnCoins() 
+        public string ReturnCoins() 
         {
-            if (Coins.Value() <= 0) return false;
-            Coins = new CoinCollection(AcceptedCoinValues);
-            return true;
+            if (Coins.Value() <= 0) return $"This machine does not contain coins.";
+            else 
+            {
+                int previousValue = Coins.Value();
+                string previousCollection = Coins.ToStringList(false);
+                Coins = new CoinCollection(AcceptedCoinValues);
+                return $"The machine has returned {previousValue} worth of coins.\n\n{previousCollection}";
+            }
         }
 
-        public bool Purchase(string productCode) 
+        public string Purchase(string productCode) 
         {
             Product selectedProduct = Products.GetItem(productCode);
 
-            Console.WriteLine(selectedProduct);
-
-            if (selectedProduct != null && Coins.Value() >= selectedProduct.Price)
+            if (selectedProduct == null)
+            {
+                return $"Could not find an item with code {productCode}.";
+            }
+            else if (Coins.Value() < selectedProduct.Price)
+            {
+                return $"You need {selectedProduct.Price - Coins.Value()} more coins to complete this purchase.";
+            }
+            else 
             {
                 int newCoinCollectionValue = Coins.Value() - selectedProduct.Price;
                 Coins = new CoinCollection(newCoinCollectionValue, AcceptedCoinValues);
-                return true;
+                return $"You have purchased {selectedProduct}.";
             }
-            else return false;
         }
 
         public override string ToString() 
         {
             string result = $"*** {Name} ***\n\n- PRODUCTS -\n";
             result += Products.ToString();
-            result += $"\n- Accepted Coins -\n{Coins}\n";
+            result += $"\n- Accepted Coins -\n{Coins.ToStringList()}\n";
             result += $"\n- CURRENT AMOUNT -\n{Coins.Value()}.00 NOK\n";
 
             return result;
