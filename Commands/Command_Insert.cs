@@ -19,9 +19,9 @@ namespace BrusAutomat.Commands
         {
             if (!ValidateParameterLength(parameters.Length) || OperationTarget == null) return MsgError;
 
-            int value = int.Parse(parameters[1]);
-            if (value > 0) return OperationTarget.InsertCoin(value);
-            else return "SOMETHING ELSE IN INSERT";
+            bool isValid = int.TryParse(parameters[1], out int value);
+            if (isValid) return OperationTarget.InsertCoin(value);
+            else return $"Could not recognize '{parameters[1]}' as a valid coin type.";
         }
     }
 }

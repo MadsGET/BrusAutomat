@@ -23,7 +23,7 @@ namespace BrusAutomat
         {
             Coin fetchedCoin = Coins.GetCoin(value);
 
-            if (fetchedCoin == null) return $"This machine does not accept {value} coin";
+            if (fetchedCoin == null) return $"This machine does not accept coin with value '{value}'.";
             else 
             {
                 fetchedCoin.Amount++;
@@ -33,13 +33,14 @@ namespace BrusAutomat
 
         public string ReturnCoins() 
         {
-            if (Coins.Value() <= 0) return $"This machine does not contain coins.";
+            if (Coins.Value() <= 0) return $"This machine does not have any coins to return.";
             else 
             {
                 int previousValue = Coins.Value();
                 string previousCollection = Coins.ToStringList(false);
+
                 Coins = new CoinCollection(AcceptedCoinValues);
-                return $"The machine has returned {previousValue} worth of coins.\n\n{previousCollection}";
+                return $"The machine has returned coins with a total value of {previousValue}.\n\n{previousCollection}";
             }
         }
 
@@ -49,7 +50,7 @@ namespace BrusAutomat
 
             if (selectedProduct == null)
             {
-                return $"Could not find an item with code {productCode}.";
+                return $"Could not find an item with code '{productCode}'.";
             }
             else if (Coins.Value() < selectedProduct.Price)
             {

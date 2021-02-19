@@ -16,9 +16,9 @@ namespace BrusAutomat.Commands
 
         public override string TryExecute(params string[] parameters)
         {
-            string codeInput = parameters[1];
             if (ValidateParameterLength(parameters.Length) && OperationTarget != null) 
             {
+                string codeInput = parameters[1];
                 return OperationTarget.Purchase(codeInput);
             }
             else return MsgError;

@@ -9,20 +9,16 @@ namespace BrusAutomat
     {
         public Coin[] Items { get; }
 
-        public CoinCollection(int collectionValue, int[] coinValues) : this(coinValues) 
+        public CoinCollection(int collectionValue, int[] coinValues) : this(coinValues)
         {
             int newCollectionValue = 0;
 
             foreach (var coin in Items) 
             {
-                while (true) 
-                {
-                    if (newCollectionValue + coin.Value <= collectionValue)
-                    {
-                        coin.Amount++;
-                        newCollectionValue += coin.Value;
-                    }
-                    else break;
+                while (newCollectionValue + coin.Value <= collectionValue) 
+                {                
+                    newCollectionValue += coin.Value;
+                    coin.Amount++;
                 }
             }
         }

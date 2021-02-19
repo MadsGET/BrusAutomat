@@ -26,14 +26,18 @@ namespace BrusAutomat
 
         public override string ToString()
         {
-            string result = "";
+            StringBuilder result = new StringBuilder();
 
             foreach (var product in Items) 
             {
-                result += product + "\n";
+                result.Append(product.Name);
+                result.Append(' ', 3);
+                result.Append($"Price: {product.Price}.00 NOK");
+                result.Append(' ', 3);
+                result.Append($"Code: {product.Code} \n");
             }
 
-            return result;
+            return result.ToString();
         }
     }
 }
