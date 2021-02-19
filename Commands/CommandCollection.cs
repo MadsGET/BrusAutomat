@@ -21,6 +21,7 @@ namespace BrusAutomat.Commands
             Items = newCommands.ToArray();
 
             ActionStringList += "- VALID ACTIONS -\n";
+
             for (int i = 0; i < Items.Length; i++)
             {
                 ActionStringList += (i != Items.Length - 1) ? $"{Items[i]}, " : $"{Items[i]}.";
